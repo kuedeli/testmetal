@@ -361,17 +361,32 @@ const femImage = '/images/homepage_368edd_32b0294a338746cab7192205fe2d5517_mv2_p
 
   <!-- ━━━━━ FINAL CTA ━━━━━ -->
   <section class="relative py-24 md:py-32 bg-ink-900 overflow-hidden border-t border-[color:var(--color-line)]">
+    <!-- Ember glow: contained, low-opacity, sits behind buttons not headline -->
     <div class="absolute inset-0 pointer-events-none">
-      <div class="ambient-blob bg-ember-300 animate-flicker" style="width: 60vw; height: 60vw; left: 50%; top: 50%; transform: translate(-50%, -50%);"></div>
+      <div
+        class="ambient-blob bg-ember-300"
+        style="width: 38vw; height: 38vw; max-width: 620px; max-height: 620px; left: 50%; bottom: -10%; transform: translateX(-50%); opacity: 0.10; animation: blobDrift 24s ease-in-out infinite;"
+      ></div>
     </div>
+    <!-- Vignette: darkens center where headline sits -->
+    <div
+      class="absolute inset-0 pointer-events-none"
+      style="background: radial-gradient(ellipse 70% 60% at 50% 45%, rgba(12,10,9,0.85) 0%, rgba(12,10,9,0.55) 40%, transparent 75%);"
+    ></div>
 
     <div class="container-page relative z-10">
       <div class="max-w-4xl mx-auto text-center">
         <div class="chapter-label mb-6 reveal">Kapitel 06 · Das Gespräch</div>
-        <h2 class="font-display text-display-xl leading-[0.88] tracking-tight text-balance reveal" style="transition-delay: 80ms;">
-          Lassen Sie uns <br/><span class="italic-ember">Feuer machen.</span>
+        <h2
+          class="font-display text-display-xl leading-[0.88] tracking-tight text-balance reveal text-bone-50"
+          style="transition-delay: 80ms; text-shadow: 0 2px 24px rgba(12,10,9,0.7);"
+        >
+          Lassen Sie uns <br/><span class="italic text-ember-200">Feuer machen.</span>
         </h2>
-        <p class="mt-10 font-serif italic text-xl md:text-2xl text-bone-200 max-w-2xl mx-auto text-pretty reveal" style="transition-delay: 200ms;">
+        <p
+          class="mt-10 font-serif italic text-xl md:text-2xl text-bone-100 max-w-2xl mx-auto text-pretty reveal"
+          style="transition-delay: 200ms; text-shadow: 0 1px 14px rgba(12,10,9,0.6);"
+        >
           Schreiben Sie. Rufen Sie an. Sie sprechen immer direkt mit Fabian.
         </p>
         <div class="mt-12 flex flex-wrap items-center justify-center gap-5 reveal" style="transition-delay: 340ms;">
