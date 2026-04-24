@@ -1,0 +1,109 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../data/site';
+---
+<BaseLayout title="Datenschutz" description="Datenschutzerklärung metal-works.ch">
+  <section class="pt-40 md:pt-48 pb-20 border-b border-ink-600">
+    <div class="container-page">
+      <div class="eyebrow mb-6">Rechtliches</div>
+      <h1 class="font-display text-display-xl leading-[0.9] tracking-tight">
+        Datenschutz<span class="italic text-ember-300">erklärung</span>
+      </h1>
+    </div>
+  </section>
+
+  <section class="py-20 md:py-24">
+    <div class="container-page">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+        <aside class="lg:col-span-3">
+          <nav class="sticky top-28 space-y-1 font-mono text-[11px] uppercase tracking-widest2 text-bone-400">
+            <a href="#verantwortlich" class="block py-2 border-l border-ink-600 pl-4 hover:text-ember-300 hover:border-ember-300 transition-colors">01 Verantwortlich</a>
+            <a href="#daten" class="block py-2 border-l border-ink-600 pl-4 hover:text-ember-300 hover:border-ember-300 transition-colors">02 Erhobene Daten</a>
+            <a href="#zweck" class="block py-2 border-l border-ink-600 pl-4 hover:text-ember-300 hover:border-ember-300 transition-colors">03 Zweck</a>
+            <a href="#rechte" class="block py-2 border-l border-ink-600 pl-4 hover:text-ember-300 hover:border-ember-300 transition-colors">04 Ihre Rechte</a>
+            <a href="#cookies" class="block py-2 border-l border-ink-600 pl-4 hover:text-ember-300 hover:border-ember-300 transition-colors">05 Cookies</a>
+            <a href="#hosting" class="block py-2 border-l border-ink-600 pl-4 hover:text-ember-300 hover:border-ember-300 transition-colors">06 Hosting</a>
+          </nav>
+        </aside>
+
+        <article class="lg:col-span-9 prose-content space-y-12 text-bone-100 text-pretty leading-relaxed">
+          <section id="verantwortlich" class="scroll-mt-32">
+            <div class="eyebrow mb-3">01 · Verantwortlich</div>
+            <h2 class="font-display text-3xl mb-4">Verantwortliche Stelle</h2>
+            <p>
+              {site.owner.name}<br />
+              {site.owner.title}<br />
+              {site.contact.address.street}<br />
+              {site.contact.address.city}<br />
+              Tel.: {site.contact.phoneDisplay}<br />
+              E-Mail: {site.contact.email}
+            </p>
+          </section>
+
+          <div class="hairline"></div>
+
+          <section id="daten" class="scroll-mt-32">
+            <div class="eyebrow mb-3">02 · Erhobene Daten</div>
+            <h2 class="font-display text-3xl mb-4">Welche Daten wir erheben</h2>
+            <p>
+              Wir erheben nur die Daten, die Sie uns aktiv über das Kontaktformular, per E-Mail oder
+              Telefon übermitteln: Name, E-Mail-Adresse, Telefonnummer (optional), Betreff und Nachrichtentext.
+              Darüber hinaus werden beim Besuch der Website technisch notwendige Informationen (IP-Adresse,
+              Browser-Typ, Zugriffszeitpunkt) in Server-Logs gespeichert.
+            </p>
+          </section>
+
+          <div class="hairline"></div>
+
+          <section id="zweck" class="scroll-mt-32">
+            <div class="eyebrow mb-3">03 · Zweck</div>
+            <h2 class="font-display text-3xl mb-4">Zweck der Datenverarbeitung</h2>
+            <p>
+              Die erhobenen Daten verwenden wir ausschliesslich zur Beantwortung Ihrer Anfrage und zur
+              allfälligen Vertragsabwicklung. Eine Weitergabe an Dritte erfolgt nicht, ausser wenn dies
+              zur Vertragserfüllung notwendig ist (z. B. Spedition, Zahlungsabwicklung).
+            </p>
+          </section>
+
+          <div class="hairline"></div>
+
+          <section id="rechte" class="scroll-mt-32">
+            <div class="eyebrow mb-3">04 · Ihre Rechte</div>
+            <h2 class="font-display text-3xl mb-4">Ihre Rechte</h2>
+            <p>
+              Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung,
+              Datenübertragbarkeit sowie Widerspruch gegen die Verarbeitung. Wenden Sie sich dafür per
+              E-Mail an die oben genannte Adresse.
+            </p>
+          </section>
+
+          <div class="hairline"></div>
+
+          <section id="cookies" class="scroll-mt-32">
+            <div class="eyebrow mb-3">05 · Cookies</div>
+            <h2 class="font-display text-3xl mb-4">Cookies & Tracking</h2>
+            <p>
+              Diese Website setzt keine Tracking-Cookies ein. Es werden keine personenbezogenen Daten
+              an Dritte wie Google Analytics, Meta Pixel o. ä. übermittelt.
+            </p>
+          </section>
+
+          <div class="hairline"></div>
+
+          <section id="hosting" class="scroll-mt-32">
+            <div class="eyebrow mb-3">06 · Hosting</div>
+            <h2 class="font-display text-3xl mb-4">Hosting</h2>
+            <p>
+              Die Website wird als statische Seite ausgeliefert. Konkrete Angaben zum Hosting-Anbieter
+              folgen bei Bedarf.
+            </p>
+          </section>
+
+          <p class="text-sm text-bone-400 pt-8">
+            Stand: {new Date().toLocaleDateString('de-CH', { year: 'numeric', month: 'long' })}
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

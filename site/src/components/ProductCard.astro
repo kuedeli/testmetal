@@ -1,0 +1,65 @@
+---
+import type { Product } from '../data/products';
+interface Props {
+  product: Product;
+  index?: number;
+  size?: 'md' | 'lg';
+}
+const { product, index = 0, size = 'md' } = Astro.props;
+
+const priceDisplay = product.priceLabel
+  ? product.priceLabel
+  : `ab CHF ${product.basePrice.toLocaleString('de-CH')}.–`;
+
+const href = product.category === 'feuer' ? `/produkte/${product.slug}/` : `/garten-moebel/#${product.slug}`;
+---
+<a href={href} class="group relative block overflow-hidden bg-ink-800 reveal" style={`transition-delay: ${index * 80}ms`}>
+  <!-- Image -->
+  <div class={size === 'lg' ? 'aspect-[4/5] overflow-hidden' : 'aspect-[4/5] overflow-hidden'}>
+    <img
+      src={product.thumbImage}
+      alt={product.name}
+      class="w-full h-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.06]"
+      style="transition-timing-function: var(--easing-soft);"
+      loading="lazy"
+      decoding="async"
+    />
+    <div class="absolute inset-0 bg-gradient-to-t from-ink-900 via-ink-900/30 to-transparent opacity-80"></div>
+  </div>
+
+  <!-- Number marker -->
+  <div class="absolute top-5 left-5 number-marker">
+    0{index + 1} / <span class="text-bone-100">{String(index + 1).padStart(2, '0')}</span>
+  </div>
+
+  <!-- Hover reveal panel -->
+  <div class="absolute top-5 right-5 w-10 h-10 rounded-full border border-bone-200/40 flex items-center justify-center text-bone-50 transition-all duration-500 group-hover:border-ember-300 group-hover:bg-ember-300 group-hover:text-ink-900">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+      <path d="M2 12L12 2M12 2H4M12 2V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
+    </svg>
+  </div>
+
+  <!-- Content -->
+  <div class="absolute bottom-0 left-0 right-0 p-6 md:p-8">
+    <div class="flex items-end justify-between gap-4">
+      <div>
+        <h3 class="font-display text-2xl md:text-3xl lg:text-4xl text-bone-50 leading-[1.05] tracking-tight">
+          {product.name}
+        </h3>
+        <p class="font-sans text-sm text-bone-200 mt-1">{product.subtitle}</p>
+      </div>
+      <div class="text-right shrink-0">
+        <div class="font-mono text-[10px] uppercase tracking-widest2 text-bone-400">Preis</div>
+        <div class="font-display text-lg md:text-xl text-ember-300">{priceDisplay}</div>
+      </div>
+    </div>
+    <div class="mt-4 overflow-hidden max-h-0 group-hover:max-h-32 transition-all duration-700 ease-out">
+      <p class="text-sm text-bone-100 text-pretty leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+        {product.tagline}
+      </p>
+    </div>
+  </div>
+
+  <!-- Hover line accent -->
+  <div class="absolute bottom-0 left-0 right-0 h-px bg-ember-300 origin-left scale-x-0 transition-transform duration-700 ease-out group-hover:scale-x-100"></div>
+</a>

@@ -1,0 +1,77 @@
+---
+interface Props {
+  images: string[];
+  alt: string;
+}
+const { images, alt } = Astro.props;
+---
+<div class="gallery relative" data-gallery>
+  <!-- Main image -->
+  <div class="relative aspect-[4/3] md:aspect-[16/11] overflow-hidden surface-card">
+    {images.map((src, i) => (
+      <img
+        src={src}
+        alt={`${alt} — Ansicht ${i + 1}`}
+        class:list={['absolute inset-0 w-full h-full object-cover transition-opacity duration-700', i === 0 ? 'opacity-100' : 'opacity-0']}
+        data-gallery-image
+        data-index={i}
+        loading={i === 0 ? 'eager' : 'lazy'}
+        decoding="async"
+      />
+    ))}
+    <div class="absolute inset-0 pointer-events-none bg-gradient-to-t from-ink-900/30 via-transparent to-transparent"></div>
+
+    <!-- Counter -->
+    <div class="absolute top-5 right-5 font-mono text-[11px] text-bone-50 bg-ink-900/75 backdrop-blur-sm px-3 py-1.5 border border-[color:var(--color-line-strong)] tabular">
+      <span data-gallery-counter>01</span>
+      <span class="text-bone-400 mx-1">/</span>
+      <span>{String(images.length).padStart(2, '0')}</span>
+    </div>
+  </div>
+
+  <!-- Thumbnails -->
+  {images.length > 1 && (
+    <div class="mt-4 grid grid-cols-6 md:grid-cols-8 gap-2 md:gap-3">
+      {images.map((src, i) => (
+        <button
+          type="button"
+          data-gallery-thumb
+          data-index={i}
+          class:list={[
+            'group relative aspect-square overflow-hidden border transition-all duration-500',
+            i === 0 ? 'border-ember-300' : 'border-[color:var(--color-line)] hover:border-bone-400',
+          ]}
+          style="transition-timing-function: var(--easing-spring);"
+          aria-label={`Bild ${i + 1} anzeigen`}
+        >
+          <img src={src} alt="" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy" />
+        </button>
+      ))}
+    </div>
+  )}
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-gallery]').forEach((root) => {
+    const images = root.querySelectorAll<HTMLImageElement>('[data-gallery-image]');
+    const thumbs = root.querySelectorAll<HTMLButtonElement>('[data-gallery-thumb]');
+    const counter = root.querySelector<HTMLElement>('[data-gallery-counter]');
+
+    const show = (idx: number) => {
+      images.forEach((img) => {
+        const i = Number(img.dataset.index);
+        img.classList.toggle('opacity-100', i === idx);
+        img.classList.toggle('opacity-0', i !== idx);
+      });
+      thumbs.forEach((t) => {
+        const i = Number(t.dataset.index);
+        t.classList.toggle('border-ember-300', i === idx);
+      });
+      if (counter) counter.textContent = String(idx + 1).padStart(2, '0');
+    };
+
+    thumbs.forEach((thumb) => {
+      thumb.addEventListener('click', () => show(Number(thumb.dataset.index)));
+    });
+  });
+</script>

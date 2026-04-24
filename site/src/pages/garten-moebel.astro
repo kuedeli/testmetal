@@ -1,0 +1,125 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import Gallery from '../components/Gallery.astro';
+import { gartenProducts } from '../data/products';
+---
+<BaseLayout
+  title="Garten & Möbel"
+  description="Rundbank aus massivem Stahl, Industriedesign-Möbel aus Altholz und Stahl, Springbrunnen mit solarbetriebener Pumpe."
+>
+  <!-- HERO -->
+  <section class="relative pt-40 md:pt-48 pb-20 md:pb-24 border-b border-ink-600">
+    <div class="container-page">
+      <div class="max-w-4xl">
+        <div class="eyebrow mb-6 reveal">Garten & Möbel</div>
+        <h1 class="font-display text-display-xl leading-[0.92] tracking-tight text-balance reveal" style="transition-delay: 100ms;">
+          Massiv. Gelassen. <span class="italic text-ember-300">Fürs Leben gemacht.</span>
+        </h1>
+        <p class="mt-8 text-lg text-bone-200 max-w-2xl text-pretty reveal" style="transition-delay: 220ms;">
+          Eine Auswahl dessen, was neben dem Feuer in der Werkstatt entsteht: Sitzgelegenheiten, Möbel, Brunnen.
+          Häufig als Unikat, immer aus massivem Stahl, ausgesuchtem Holz oder kombiniert.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Products -->
+  {gartenProducts.map((product, idx) => (
+    <section id={product.slug} class:list={['py-24 md:py-30', idx % 2 === 0 ? 'bg-ink-900' : 'bg-ink-800/50 border-y border-ink-600']}>
+      <div class="container-page">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+          <div class:list={[idx % 2 === 0 ? 'lg:col-span-5 lg:order-1' : 'lg:col-span-5 lg:col-start-8 lg:order-2']}>
+            <div class="flex items-center gap-4 mb-6">
+              <span class="font-mono text-[11px] text-ember-300 tracking-widest2">0{idx + 1}</span>
+              <span class="h-px w-12 bg-ember-300/40"></span>
+              <span class="eyebrow text-bone-400">{product.subtitle}</span>
+            </div>
+            <h2 class="font-display text-display-lg leading-none tracking-tight text-balance reveal">
+              {product.name}
+            </h2>
+            <p class="mt-6 text-lg text-bone-200 text-pretty max-w-copy">{product.tagline}</p>
+
+            <p class="mt-6 text-bone-100 text-pretty leading-relaxed max-w-copy">{product.lead}</p>
+
+            <!-- Specs -->
+            <div class="mt-10 bg-ink-800 border border-ink-600">
+              <table class="w-full">
+                <tbody>
+                  {product.specs.map((s, i) => (
+                    <tr class={i !== 0 ? 'border-t border-ink-600' : ''}>
+                      <th class="text-left align-top py-3 px-5 font-mono text-[10px] uppercase tracking-widest2 text-bone-400 w-1/2">
+                        {s.label}
+                      </th>
+                      <td class="py-3 px-5 text-bone-50 text-sm">
+                        {s.value}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Price + CTA -->
+            <div class="mt-8 flex items-end gap-6">
+              <div>
+                <div class="font-mono text-[11px] uppercase tracking-widest2 text-bone-400 mb-1">Preis</div>
+                <div class="font-display text-3xl text-ember-300">
+                  {product.priceLabel ?? `ab CHF ${product.basePrice.toLocaleString('de-CH')}.–`}
+                </div>
+              </div>
+              <a href={`/kontakt/?produkt=${encodeURIComponent(product.name)}`} class="btn-primary">
+                Anfragen
+                <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
+                  <path d="M1 5H13M13 5L9 1M13 5L9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
+                </svg>
+              </a>
+            </div>
+
+            {product.options && product.options.length > 0 && (
+              <div class="mt-8 pt-6 border-t border-ink-600">
+                <div class="eyebrow mb-3">Optional</div>
+                <ul class="space-y-2 text-sm">
+                  {product.options.map((o) => (
+                    <li class="flex justify-between border-b border-ink-600 py-2">
+                      <span class="text-bone-100">{o.label}</span>
+                      <span class="font-mono text-bone-400">+ CHF {o.priceAdd.toLocaleString('de-CH')}.–</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+
+          <div class:list={[idx % 2 === 0 ? 'lg:col-span-7 lg:col-start-6 lg:order-2' : 'lg:col-span-7 lg:order-1']}>
+            <Gallery images={product.gallery} alt={product.name} />
+          </div>
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <!-- Custom CTA -->
+  <section class="py-24 md:py-30 bg-ink-900">
+    <div class="container-page">
+      <div class="text-center max-w-3xl mx-auto">
+        <div class="eyebrow mb-6 reveal">Individuell</div>
+        <h2 class="font-display text-display-lg leading-none tracking-tight reveal" style="transition-delay: 100ms;">
+          Etwas anderes <span class="italic text-ember-300">im Kopf?</span>
+        </h2>
+        <p class="mt-8 text-lg text-bone-200 text-pretty reveal" style="transition-delay: 200ms;">
+          Unikate auf Anfrage sind unser Alltag. Zeichnung, Skizze, Foto — senden Sie uns, was Sie sich vorstellen,
+          und wir rechnen und bauen.
+        </p>
+        <div class="mt-10 reveal" style="transition-delay: 320ms;">
+          <a href="/kontakt/" class="btn-primary">
+            Unikat anfragen
+            <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
+              <path d="M1 5H13M13 5L9 1M13 5L9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

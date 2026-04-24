@@ -1,0 +1,25 @@
+---
+interface Props {
+  items: string[];
+  separator?: string;
+}
+const { items, separator = '✦' } = Astro.props;
+const loop = [...items, ...items, ...items];
+---
+<div class="relative overflow-hidden border-y border-ink-600 bg-ink-800/60 py-5">
+  <div class="flex gap-10 whitespace-nowrap animate-[scroll_40s_linear_infinite]" style="width: max-content;">
+    {loop.map((item) => (
+      <span class="flex items-center gap-10">
+        <span class="font-display italic text-xl md:text-2xl text-bone-100">{item}</span>
+        <span class="text-ember-300 text-xs">{separator}</span>
+      </span>
+    ))}
+  </div>
+</div>
+
+<style>
+  @keyframes scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-33.3333%); }
+  }
+</style>

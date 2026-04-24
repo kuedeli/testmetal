@@ -1,0 +1,113 @@
+---
+import { nav, site } from '../data/site';
+const currentPath = Astro.url.pathname;
+const isActive = (href: string) => currentPath === href || (href !== '/' && currentPath.startsWith(href));
+---
+
+<header class="fixed top-0 left-0 right-0 z-40 transition-all duration-500" id="site-header">
+  <div class="absolute inset-0 bg-ink-900/70 backdrop-blur-xl border-b border-ink-600/40 opacity-0 transition-opacity duration-500" id="header-bg"></div>
+
+  <div class="container-page relative flex items-center justify-between py-5 md:py-6">
+    <a href="/" class="group flex items-baseline gap-2 text-bone-50 hover:text-ember-300 transition-colors duration-500">
+      <span class="font-display text-2xl md:text-[28px] tracking-tight leading-none">
+        metal<span class="italic text-ember-300">·</span>works
+      </span>
+      <span class="font-mono text-[10px] uppercase tracking-widest3 text-bone-400 group-hover:text-ember-300 transition-colors duration-500">.ch</span>
+    </a>
+
+    <nav class="hidden md:flex items-center gap-10" aria-label="Hauptnavigation">
+      {nav.map((item) => (
+        <a
+          href={item.href}
+          class:list={[
+            'link-underline font-mono text-[11px] uppercase tracking-widest3 transition-colors duration-500',
+            isActive(item.href) ? 'text-ember-300' : 'text-bone-100 hover:text-ember-300',
+          ]}
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="hidden md:flex items-center gap-4">
+      <a href={`tel:${site.contact.phone}`} class="font-mono text-[11px] text-bone-400 hover:text-ember-300 transition-colors tracking-widest2 tabular">
+        {site.contact.phoneDisplay}
+      </a>
+      <a href="/kontakt/" class="btn-primary text-[11px]">
+        Anfrage
+        <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
+          <path d="M1 5H13M13 5L9 1M13 5L9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
+        </svg>
+      </a>
+    </div>
+
+    <button
+      id="menu-toggle"
+      class="md:hidden flex flex-col justify-center gap-[5px] w-8 h-8 text-bone-50"
+      aria-label="Menü öffnen"
+      aria-expanded="false"
+    >
+      <span class="block h-px w-6 bg-current transition-transform duration-300 origin-center"></span>
+      <span class="block h-px w-6 bg-current transition-opacity duration-200"></span>
+      <span class="block h-px w-6 bg-current transition-transform duration-300 origin-center"></span>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div
+    id="mobile-menu"
+    class="md:hidden fixed inset-0 z-50 bg-ink-900 translate-x-full transition-transform duration-500 ease-out"
+    style="transition-timing-function: var(--easing-soft);"
+  >
+    <div class="container-page py-6 flex items-center justify-between">
+      <span class="font-display text-2xl leading-none">metal<span class="italic text-ember-300">·</span>works<span class="font-mono text-[10px] text-bone-400 ml-2 tracking-widest3">.ch</span></span>
+      <button id="menu-close" aria-label="Menü schliessen" class="text-bone-50 text-2xl leading-none">×</button>
+    </div>
+    <nav class="container-page pt-8 flex flex-col gap-1" aria-label="Mobile Navigation">
+      {nav.map((item, i) => (
+        <a
+          href={item.href}
+          class="group flex items-center justify-between border-t border-ink-600 py-6 text-bone-50 hover:text-ember-300 transition-colors"
+          style={`animation-delay: ${0.1 + i * 0.08}s`}
+        >
+          <span class="font-display text-3xl">{item.label}</span>
+          <span class="font-mono text-[11px] text-bone-400 group-hover:text-ember-300">0{i + 1}</span>
+        </a>
+      ))}
+      <div class="border-t border-b border-ink-600 py-8 mt-8 space-y-2">
+        <a href={`tel:${site.contact.phone}`} class="block font-mono text-sm text-bone-200">{site.contact.phoneDisplay}</a>
+        <a href={`mailto:${site.contact.email}`} class="block font-mono text-xs text-bone-400">{site.contact.email}</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<script>
+  // Header background on scroll
+  const headerBg = document.getElementById('header-bg');
+  const onScroll = () => {
+    if (!headerBg) return;
+    if (window.scrollY > 40) headerBg.classList.remove('opacity-0');
+    else headerBg.classList.add('opacity-0');
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Mobile menu
+  const toggle = document.getElementById('menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+  const close = document.getElementById('menu-close');
+  const openMenu = () => {
+    menu?.classList.remove('translate-x-full');
+    toggle?.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  };
+  const closeMenu = () => {
+    menu?.classList.add('translate-x-full');
+    toggle?.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  };
+  toggle?.addEventListener('click', openMenu);
+  close?.addEventListener('click', closeMenu);
+  menu?.querySelectorAll('a').forEach((a) => a.addEventListener('click', closeMenu));
+</script>

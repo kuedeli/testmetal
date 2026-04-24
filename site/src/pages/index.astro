@@ -1,0 +1,321 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProductCard from '../components/ProductCard.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import Marquee from '../components/Marquee.astro';
+import { pillars, site } from '../data/site';
+import { products } from '../data/products';
+
+const heroImage = '/images/homepage_368edd_7d7579fc40964818ab033182037607d9_7Emv2_jpg.jpg';
+const workshopImage = '/images/homepage_368edd_1a9cd367397f48378c324d18505d7916_mv2_d_5152_3864_s_4_.jpg';
+const fiveImage = '/images/homepage_368edd_c5ff0877d01c4983a24665771a02db63_mv2_d_5152_3864_s_4_.jpg';
+---
+<BaseLayout>
+  <!-- HERO -->
+  <section class="relative min-h-screen flex items-end overflow-hidden">
+    <!-- Background image -->
+    <div class="absolute inset-0 z-0">
+      <img
+        src={heroImage}
+        alt="Feuerkugel am Abend"
+        class="w-full h-full object-cover scale-[1.03]"
+        style="transform-origin: center; animation: heroZoom 30s ease-out infinite alternate;"
+        fetchpriority="high"
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-ink-900 via-ink-900/70 to-ink-900/30"></div>
+      <div class="absolute inset-0 bg-gradient-to-r from-ink-900/80 via-transparent to-transparent"></div>
+    </div>
+
+    <!-- Top meta strip -->
+    <div class="absolute top-24 md:top-28 left-0 right-0 z-10">
+      <div class="container-page flex items-center justify-between gap-6">
+        <div class="flex items-center gap-4">
+          <span class="font-mono text-[11px] uppercase tracking-widest2 text-ember-300">○ Werkstatt aktiv</span>
+          <span class="hidden md:inline font-mono text-[11px] text-bone-400 tracking-widest2">8918 Unterlunkhofen · Kanton Aargau</span>
+        </div>
+        <span class="hidden md:inline font-mono text-[11px] tracking-widest2 text-bone-400">Seit 2018 · 100 % Swiss Made</span>
+      </div>
+    </div>
+
+    <!-- Hero content -->
+    <div class="container-page relative z-10 pb-24 md:pb-28">
+      <div class="max-w-5xl">
+        <div class="eyebrow mb-8 reveal">
+          <span class="inline-block w-12 h-px bg-ember-300 align-middle mr-3"></span>
+          Design · Engineering · Handwerk
+        </div>
+        <h1 class="font-display text-display-xl text-bone-50 leading-[0.92] tracking-tight text-balance reveal" style="transition-delay: 120ms;">
+          Feuer. Stahl.
+          <span class="block italic text-ember-300">Ingenieurskunst.</span>
+        </h1>
+        <p class="mt-8 text-lg md:text-xl text-bone-200 max-w-2xl text-pretty leading-relaxed reveal" style="transition-delay: 240ms;">
+          Individuelle Grills, Feuerkugeln und Gartenausstattung aus massivem Stahl —
+          vom Polymechaniker EFZ und diplomierten Maschineningenieur FH.
+          Alles aus einer Hand. Alles aus einer Werkstatt.
+        </p>
+        <div class="mt-10 flex flex-wrap items-center gap-5 reveal" style="transition-delay: 360ms;">
+          <a href="/produkte/" class="btn-primary">
+            Produkte entdecken
+            <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
+              <path d="M1 5H13M13 5L9 1M13 5L9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
+            </svg>
+          </a>
+          <a href="/kontakt/" class="btn-ghost">Jetzt anfragen</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom meta -->
+    <div class="absolute bottom-6 left-0 right-0 z-10">
+      <div class="container-page flex items-center justify-between gap-6 font-mono text-[10px] uppercase tracking-widest2 text-bone-400">
+        <span>↓ Scroll</span>
+        <span>Patent EP 3 795 857 A1</span>
+      </div>
+    </div>
+
+    <style>
+      @keyframes heroZoom {
+        from { transform: scale(1.0); }
+        to   { transform: scale(1.08); }
+      }
+    </style>
+  </section>
+
+  <!-- MARQUEE -->
+  <Marquee items={['Feuerkugeln', 'Feuerkubus', 'Feuerschalen', 'Rundbank', 'Möbel', 'Springbrunnen', 'Handgefertigt in der Schweiz']} />
+
+  <!-- THREE PILLARS -->
+  <section class="relative py-24 md:py-30 bg-ink-900">
+    <div class="container-page">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 mb-16">
+        <div class="lg:col-span-5">
+          <SectionHeading
+            number="01"
+            eyebrow="Philosophie"
+            title="Drei Disziplinen,"
+            titleItalic="eine Hand."
+            lead="Design, Engineering und Handwerk — bei anderen liegt dazwischen ein ganzes Team. Bei metal-works.ch liegt dazwischen nichts ausser der Werkbank."
+          />
+        </div>
+        <div class="lg:col-span-6 lg:col-start-7">
+          <p class="text-bone-200 text-lg leading-relaxed text-pretty reveal">
+            Fabian Schmitter entwickelt, berechnet und baut jedes Stück selbst. Diese seltene Kombination
+            — Polymechaniker EFZ, dipl. Masch.-Ing. FH, MBA — ist der Grund, warum unsere Feuerkugeln
+            6 mm Wandstärke haben, wo andere bei 2 mm beginnen. Ingenieurskunst ist nicht optional.
+            Sie ist die Grundlage.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-ink-500">
+        {pillars.map((p, i) => (
+          <article class="group relative bg-ink-900 p-8 md:p-10 transition-colors duration-500 hover:bg-ink-800 reveal" style={`transition-delay: ${i * 120}ms`}>
+            <div class="flex items-start justify-between mb-8">
+              <span class="font-mono text-[11px] tracking-widest2 text-ember-300">{p.kicker}</span>
+              <span class="font-mono text-[11px] uppercase tracking-widest2 text-bone-400">·</span>
+            </div>
+            <h3 class="font-display text-display-md leading-none tracking-tight mb-6 group-hover:text-ember-300 transition-colors duration-500">
+              {p.title}
+            </h3>
+            <p class="text-bone-200 mb-6 text-pretty leading-relaxed">{p.lead}</p>
+            <ul class="space-y-2 text-sm text-bone-100">
+              {p.points.map((pt) => (
+                <li class="flex gap-3">
+                  <span class="text-ember-300 shrink-0">─</span>
+                  <span>{pt}</span>
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED PRODUCTS -->
+  <section class="relative py-24 md:py-30 bg-ink-800/50">
+    <div class="container-page">
+      <div class="flex flex-col md:flex-row items-start md:items-end justify-between gap-8 mb-16">
+        <SectionHeading
+          number="02"
+          eyebrow="Kollektion"
+          title="Vier Wege,"
+          titleItalic="ein Feuer zu bändigen."
+        />
+        <a href="/produkte/" class="btn-ghost">
+          Alle Produkte
+          <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
+            <path d="M1 5H13M13 5L9 1M13 5L9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
+          </svg>
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
+        {products.map((p, i) => (
+          <ProductCard product={p} index={i} size="lg" />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPARISON / 6mm -->
+  <section class="relative py-24 md:py-30 overflow-hidden">
+    <div class="absolute inset-0 z-0">
+      <img src={fiveImage} alt="" class="w-full h-full object-cover opacity-25" loading="lazy" />
+      <div class="absolute inset-0 bg-gradient-to-br from-ink-900 via-ink-900/95 to-ink-900/80"></div>
+    </div>
+
+    <div class="container-page relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+        <div class="lg:col-span-6">
+          <SectionHeading
+            number="03"
+            eyebrow="Der Unterschied"
+            title="Sechs Millimeter"
+            titleItalic="machen den Unterschied."
+          />
+          <p class="mt-8 text-lg text-bone-200 leading-relaxed text-pretty max-w-copy">
+            Die Wandstärke einer Feuerkugel bestimmt, ob sie nach ein paar Jahren Einsatz noch
+            ihre Form behält — oder ob sie sich durch die Hitze verzieht. Wir fertigen konsequent
+            mit <span class="text-ember-300 font-medium">6 mm</span>. Der Grossteil aller Mitbewerber
+            liegt zwischen 2 und 5 mm. Bei uns kein Verziehen. Kein Nachgeben. Auch nach dem
+            zehnten Sommer nicht.
+          </p>
+        </div>
+
+        <div class="lg:col-span-6 lg:col-start-7">
+          <div class="grid grid-cols-2 gap-5">
+            <!-- Competitor -->
+            <div class="bg-ink-800/70 backdrop-blur border border-ink-500 p-8 reveal">
+              <div class="font-mono text-[11px] uppercase tracking-widest2 text-bone-400 mb-6">Mitbewerber</div>
+              <div class="font-display text-display-md text-bone-300 mb-3 leading-none">
+                2 <span class="text-bone-400">–</span> 5
+                <span class="text-base align-top ml-1 text-bone-400">mm</span>
+              </div>
+              <div class="h-1 bg-bone-300/30 mb-6"></div>
+              <ul class="text-sm text-bone-300 space-y-2">
+                <li>— Verziehen im Betrieb</li>
+                <li>— Kürzere Lebensdauer</li>
+                <li>— Oft keine Oberflächenbehandlung</li>
+              </ul>
+            </div>
+
+            <!-- Us -->
+            <div class="relative bg-gradient-to-br from-ember-400/20 via-ink-800 to-ink-800 border border-ember-300/60 p-8 shadow-ember reveal" style="transition-delay: 120ms;">
+              <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-ember-300 to-transparent"></div>
+              <div class="font-mono text-[11px] uppercase tracking-widest2 text-ember-300 mb-6">metal-works</div>
+              <div class="font-display text-display-md text-ember-300 mb-3 leading-none">
+                6
+                <span class="text-base align-top ml-1 text-ember-300/80">mm</span>
+              </div>
+              <div class="h-1 bg-ember-300 mb-6"></div>
+              <ul class="text-sm text-bone-100 space-y-2">
+                <li class="text-ember-300">+ Formstabil auf Jahre</li>
+                <li class="text-ember-300">+ Sandgestrahlte Rostpatina</li>
+                <li class="text-ember-300">+ Modularer Aufbau</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="mt-8 text-xs font-mono uppercase tracking-widest2 text-bone-400">
+            / Quelle: Mitbewerber-Analyse, Hochpreissegment Schweiz
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORKSHOP TEASER -->
+  <section class="relative py-24 md:py-30 bg-ink-900">
+    <div class="container-page">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+        <div class="lg:col-span-6 order-2 lg:order-1">
+          <div class="relative aspect-[4/5] overflow-hidden reveal">
+            <img src={workshopImage} alt="Werkstatt metal-works" class="w-full h-full object-cover" loading="lazy" />
+            <div class="absolute bottom-6 left-6 right-6 flex items-end justify-between">
+              <div class="bg-ink-900/90 backdrop-blur px-4 py-3">
+                <div class="font-mono text-[10px] uppercase tracking-widest2 text-bone-400">Werkstatt</div>
+                <div class="font-display text-lg text-ember-300">Oberwilerstrasse 13</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-6 lg:col-start-7 order-1 lg:order-2">
+          <SectionHeading
+            number="04"
+            eyebrow="Über uns"
+            title="Ein Mann."
+            titleItalic="Eine Werkstatt. Ein Ingenieur."
+            lead="Fabian Schmitter: Polymechaniker EFZ, dipl. Masch.-Ing. FH, MBA Luzern. Patentbeteiligung in der Maschinenindustrie. Und ein Grill, der Generationen überdauert."
+          />
+          <div class="mt-10 space-y-6">
+            <div class="flex items-start gap-6">
+              <div class="font-mono text-[11px] tracking-widest2 text-ember-300 shrink-0 w-8 pt-1">01</div>
+              <div>
+                <div class="font-display text-xl text-bone-50 mb-1">Konstruktion</div>
+                <p class="text-sm text-bone-200">CAD, FEM, Festigkeits- und Wärmeberechnung vor der ersten Funke.</p>
+              </div>
+            </div>
+            <div class="hairline"></div>
+            <div class="flex items-start gap-6">
+              <div class="font-mono text-[11px] tracking-widest2 text-ember-300 shrink-0 w-8 pt-1">02</div>
+              <div>
+                <div class="font-display text-xl text-bone-50 mb-1">Fertigung</div>
+                <p class="text-sm text-bone-200">Zuschnitt, Schweissen, Schleifen, Strahlen. Alles vor Ort.</p>
+              </div>
+            </div>
+            <div class="hairline"></div>
+            <div class="flex items-start gap-6">
+              <div class="font-mono text-[11px] tracking-widest2 text-ember-300 shrink-0 w-8 pt-1">03</div>
+              <div>
+                <div class="font-display text-xl text-bone-50 mb-1">Finish</div>
+                <p class="text-sm text-bone-200">Sandgestrahlt, lackiert, gewachst oder roh — je nach Wunsch.</p>
+              </div>
+            </div>
+          </div>
+          <div class="mt-10">
+            <a href="/ueber-uns/" class="btn-ghost">
+              Mehr über Fabian
+              <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
+                <path d="M1 5H13M13 5L9 1M13 5L9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="relative py-24 md:py-30 bg-ink-900 overflow-hidden border-t border-ink-600">
+    <!-- Ember glow -->
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] rounded-full blur-[140px] bg-ember-400/15 animate-flicker"></div>
+    </div>
+
+    <div class="container-page relative z-10">
+      <div class="max-w-4xl mx-auto text-center">
+        <div class="eyebrow mb-6 reveal">Bereit?</div>
+        <h2 class="font-display text-display-xl leading-[0.9] tracking-tight text-balance reveal" style="transition-delay: 100ms;">
+          Lassen Sie uns <span class="italic text-ember-300">Feuer machen.</span>
+        </h2>
+        <p class="mt-8 text-lg text-bone-200 max-w-2xl mx-auto text-pretty reveal" style="transition-delay: 220ms;">
+          Schreiben Sie uns eine Mail, rufen Sie direkt an, oder senden Sie eine konfigurierte Anfrage.
+          Sie sprechen immer mit Fabian — direkt, ohne Umwege.
+        </p>
+        <div class="mt-10 flex flex-wrap items-center justify-center gap-5 reveal" style="transition-delay: 340ms;">
+          <a href="/kontakt/" class="btn-primary">
+            Anfrage senden
+            <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
+              <path d="M1 5H13M13 5L9 1M13 5L9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
+            </svg>
+          </a>
+          <a href={`tel:${site.contact.phone}`} class="btn-ghost">
+            {site.contact.phoneDisplay}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

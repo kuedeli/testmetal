@@ -1,0 +1,94 @@
+---
+import { site } from '../data/site';
+
+interface Props {
+  subjectPrefill?: string;
+  title?: string;
+  compact?: boolean;
+}
+const { subjectPrefill = '', title = 'Anfrage senden', compact = false } = Astro.props;
+---
+<form
+  class:list={['inquiry-form relative', compact ? '' : 'bg-ink-800 border border-ink-600 p-8 md:p-10']}
+  action={`mailto:${site.contact.email}`}
+  method="post"
+  enctype="text/plain"
+>
+  <div class="flex items-end justify-between gap-4 mb-6">
+    <h3 class="font-display text-2xl md:text-3xl tracking-tight">{title}</h3>
+    <span class="font-mono text-[11px] uppercase tracking-widest2 text-bone-400">/ Kontakt</span>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+    <label class="flex flex-col gap-2">
+      <span class="font-mono text-[11px] uppercase tracking-widest2 text-bone-400">Name</span>
+      <input
+        type="text"
+        name="Name"
+        required
+        class="bg-transparent border-b border-ink-500 focus:border-ember-300 py-3 font-sans text-base text-bone-50 focus:outline-none transition-colors"
+      />
+    </label>
+    <label class="flex flex-col gap-2">
+      <span class="font-mono text-[11px] uppercase tracking-widest2 text-bone-400">E-Mail</span>
+      <input
+        type="email"
+        name="Email"
+        required
+        class="bg-transparent border-b border-ink-500 focus:border-ember-300 py-3 font-sans text-base text-bone-50 focus:outline-none transition-colors"
+      />
+    </label>
+    <label class="flex flex-col gap-2">
+      <span class="font-mono text-[11px] uppercase tracking-widest2 text-bone-400">Telefon (optional)</span>
+      <input
+        type="tel"
+        name="Telefon"
+        class="bg-transparent border-b border-ink-500 focus:border-ember-300 py-3 font-sans text-base text-bone-50 focus:outline-none transition-colors"
+      />
+    </label>
+    <label class="flex flex-col gap-2">
+      <span class="font-mono text-[11px] uppercase tracking-widest2 text-bone-400">Betreff</span>
+      <input
+        type="text"
+        name="Betreff"
+        value={subjectPrefill}
+        class="bg-transparent border-b border-ink-500 focus:border-ember-300 py-3 font-sans text-base text-bone-50 focus:outline-none transition-colors"
+        data-subject-input
+      />
+    </label>
+  </div>
+
+  <label class="flex flex-col gap-2 mt-5">
+    <span class="font-mono text-[11px] uppercase tracking-widest2 text-bone-400">Nachricht</span>
+    <textarea
+      name="Nachricht"
+      rows="5"
+      required
+      class="bg-transparent border-b border-ink-500 focus:border-ember-300 py-3 font-sans text-base text-bone-50 focus:outline-none transition-colors resize-none"
+      placeholder="Gewünschtes Produkt, Konfiguration, Termin, individuelle Wünsche…"
+    ></textarea>
+  </label>
+
+  <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mt-8 pt-6 border-t border-ink-600">
+    <p class="text-xs text-bone-400 max-w-md">
+      Mit dem Absenden erklären Sie sich einverstanden, dass wir Sie zur Beantwortung Ihrer Anfrage kontaktieren.
+    </p>
+    <button type="submit" class="btn-primary whitespace-nowrap">
+      Anfrage absenden
+      <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
+        <path d="M1 5H13M13 5L9 1M13 5L9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
+      </svg>
+    </button>
+  </div>
+</form>
+
+<script>
+  // Prefill subject from ?produkt= query param
+  const params = new URLSearchParams(window.location.search);
+  const prod = params.get('produkt');
+  if (prod) {
+    document.querySelectorAll<HTMLInputElement>('[data-subject-input]').forEach((el) => {
+      el.value = `Anfrage: ${decodeURIComponent(prod)}`;
+    });
+  }
+</script>

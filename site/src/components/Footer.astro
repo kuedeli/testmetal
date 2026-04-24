@@ -1,0 +1,85 @@
+---
+import { site, nav } from '../data/site';
+const year = new Date().getFullYear();
+---
+<footer class="relative bg-ink-900 border-t border-ink-600 mt-30">
+  <div class="container-page py-20 md:py-24">
+    <!-- Oversize wordmark -->
+    <div class="relative mb-16">
+      <h2 class="font-display text-display-xl text-bone-50 leading-none tracking-tight">
+        <span class="block">metal</span>
+        <span class="block italic text-ember-300">works</span>
+      </h2>
+      <span class="absolute bottom-2 right-0 font-mono text-[11px] uppercase tracking-widest2 text-bone-400">
+        .ch — seit jahren
+      </span>
+    </div>
+
+    <div class="hairline mb-16"></div>
+
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-12">
+      <!-- Contact -->
+      <div class="md:col-span-4">
+        <div class="eyebrow mb-5">Kontakt</div>
+        <address class="not-italic space-y-1 text-bone-100">
+          <div class="font-display text-lg">{site.owner.name}</div>
+          <div class="font-mono text-[11px] text-bone-400 uppercase tracking-widest2 leading-relaxed mb-4">{site.owner.title}</div>
+          <a href={`tel:${site.contact.phone}`} class="block link-underline">{site.contact.phoneDisplay}</a>
+          <a href={`mailto:${site.contact.email}`} class="block link-underline text-sm text-bone-200">{site.contact.email}</a>
+          <div class="text-sm text-bone-200 pt-3">
+            {site.contact.address.street}<br />
+            {site.contact.address.city}<br />
+            {site.contact.address.country}
+          </div>
+        </address>
+      </div>
+
+      <!-- Nav -->
+      <div class="md:col-span-3">
+        <div class="eyebrow mb-5">Seiten</div>
+        <ul class="space-y-2">
+          <li><a href="/" class="link-underline text-bone-100 text-sm">Start</a></li>
+          {nav.map((item) => (
+            <li><a href={item.href} class="link-underline text-bone-100 text-sm">{item.label}</a></li>
+          ))}
+          <li><a href="/datenschutz/" class="link-underline text-bone-400 text-sm">Datenschutz</a></li>
+        </ul>
+      </div>
+
+      <!-- USP -->
+      <div class="md:col-span-5">
+        <div class="eyebrow mb-5">Werkstatt</div>
+        <p class="text-bone-100 text-pretty text-lg leading-relaxed max-w-copy">
+          Einzelfertigung aus dem Kanton Aargau. Konstruktion, Berechnung, Schweissarbeit und Oberflächenbehandlung aus einer Hand —
+          vom Polymechaniker EFZ und dipl. Maschineningenieur FH.
+        </p>
+        <div class="mt-6 flex items-center gap-6">
+          <div>
+            <div class="font-display text-3xl text-ember-300">6 mm</div>
+            <div class="font-mono text-[10px] uppercase tracking-widest2 text-bone-400">Wandstärke</div>
+          </div>
+          <div class="w-px h-10 bg-ink-500"></div>
+          <div>
+            <div class="font-display text-3xl text-ember-300">100 %</div>
+            <div class="font-mono text-[10px] uppercase tracking-widest2 text-bone-400">Swiss Made</div>
+          </div>
+          <div class="w-px h-10 bg-ink-500"></div>
+          <div>
+            <div class="font-display text-3xl text-ember-300">1</div>
+            <div class="font-mono text-[10px] uppercase tracking-widest2 text-bone-400">Handwerker</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hairline mt-20 mb-8"></div>
+
+    <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 font-mono text-[11px] uppercase tracking-widest2 text-bone-400">
+      <div>© {year} metal-works.ch · alle Preise inkl. MwSt.</div>
+      <div class="flex items-center gap-6">
+        <a href="/datenschutz/" class="hover:text-ember-300 transition-colors">Datenschutz</a>
+        <a href="/kontakt/" class="hover:text-ember-300 transition-colors">Impressum</a>
+      </div>
+    </div>
+  </div>
+</footer>

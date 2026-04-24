@@ -1,0 +1,102 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import { products, gartenProducts } from '../../data/products';
+---
+<BaseLayout
+  title="Produkte"
+  description="Feuerkugel Klassik, Feuerkugel Asymmetrisch, Feuerkubus und Feuerschale — individuelle Grills und Gartenausstattung aus massivem Stahl."
+>
+  <!-- HEADER -->
+  <section class="relative pt-40 md:pt-48 pb-20 md:pb-24 border-b border-ink-600">
+    <div class="container-page">
+      <div class="flex flex-col md:flex-row items-start md:items-end justify-between gap-10">
+        <div class="max-w-4xl">
+          <div class="eyebrow mb-6 reveal">Alle Produkte</div>
+          <h1 class="font-display text-display-xl leading-[0.92] tracking-tight text-balance reveal" style="transition-delay: 100ms;">
+            Vom Feuer <span class="italic text-ember-300">zum Garten.</span>
+          </h1>
+          <p class="mt-8 text-lg text-bone-200 max-w-2xl text-pretty reveal" style="transition-delay: 220ms;">
+            Jede Linie entsteht aus demselben Prinzip: Konstruktion, Berechnung, Fertigung, Finish —
+            alles in einer Hand, alles in einer Werkstatt.
+          </p>
+        </div>
+        <div class="flex items-center gap-8 font-mono text-[11px] uppercase tracking-widest2 text-bone-400 reveal" style="transition-delay: 340ms;">
+          <span>{products.length + gartenProducts.length} Produktlinien</span>
+          <span class="hidden md:inline">·</span>
+          <span class="hidden md:inline">Alle inkl. MwSt.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEUER -->
+  <section class="py-24 md:py-30 bg-ink-900">
+    <div class="container-page">
+      <div class="mb-16">
+        <SectionHeading
+          number="01"
+          eyebrow="Feuer"
+          title="Grills &"
+          titleItalic="Feuerstellen"
+          lead="Vier Produktlinien für unterschiedliche Anwendungen — vom klassischen Halbkugel-Grill bis zur multifunktionalen Feuerschale."
+        />
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
+        {products.map((p, i) => (
+          <ProductCard product={p} index={i} size="lg" />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- GARTEN -->
+  <section class="py-24 md:py-30 bg-ink-800/50 border-t border-ink-600">
+    <div class="container-page">
+      <div class="mb-16">
+        <SectionHeading
+          number="02"
+          eyebrow="Garten"
+          title="Möbel &"
+          titleItalic="Ausstattung"
+          lead="Rundbank, Industriedesign-Möbel und Springbrunnen — massiv, durchdacht, oft nach Mass."
+        />
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
+        {gartenProducts.map((p, i) => (
+          <ProductCard product={p} index={i} size="md" />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CUSTOM CTA -->
+  <section class="py-24 md:py-30 bg-ink-900">
+    <div class="container-page">
+      <div class="relative bg-gradient-to-br from-ember-400/10 via-ink-800 to-ink-900 border border-ink-500 p-10 md:p-16 overflow-hidden">
+        <div class="absolute -right-20 -top-20 w-96 h-96 rounded-full blur-[100px] bg-ember-400/15 pointer-events-none"></div>
+        <div class="relative grid grid-cols-1 md:grid-cols-12 gap-10 items-end">
+          <div class="md:col-span-8">
+            <div class="eyebrow mb-4">Nicht im Katalog?</div>
+            <h2 class="font-display text-display-lg leading-none tracking-tight">
+              Sondermasse, <span class="italic text-ember-300">Sonderwünsche.</span>
+            </h2>
+            <p class="mt-6 text-bone-200 max-w-2xl text-pretty">
+              Nahezu alles lässt sich anpassen: Abmessungen, Oberflächen, Lackierungen, individuelles Zubehör.
+              Beschreiben Sie uns, was Sie brauchen — wir rechnen und bauen.
+            </p>
+          </div>
+          <div class="md:col-span-4 md:text-right">
+            <a href="/kontakt/" class="btn-primary">
+              Individuelle Anfrage
+              <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
+                <path d="M1 5H13M13 5L9 1M13 5L9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,142 @@
+---
+import type { Product } from '../data/products';
+interface Props {
+  product: Product;
+}
+const { product } = Astro.props;
+---
+<div class="configurator relative surface-card p-6 md:p-10" data-configurator data-base-price={product.basePrice}>
+  <div class="flex items-end justify-between gap-4 mb-8">
+    <div>
+      <div class="eyebrow mb-3">Konfigurator</div>
+      <h3 class="font-display text-display-sm tracking-tight">Ihre <span class="italic-ember">Ausführung</span>.</h3>
+    </div>
+    <span class="font-mono text-[10px] uppercase tracking-widest3 text-bone-400 flex items-center gap-2">
+      <span class="inline-block w-1.5 h-1.5 rounded-full bg-ember-300 animate-pulse"></span>
+      Echtzeit
+    </span>
+  </div>
+
+  {product.variants && product.variants.length > 0 && (
+    <fieldset class="mb-8">
+      <legend class="font-mono text-[10px] uppercase tracking-widest3 text-bone-400 mb-4">Grundausführung</legend>
+      <div class="space-y-0">
+        {product.variants.map((v, i) => (
+          <label class="group flex items-start gap-4 cursor-pointer border-b border-[color:var(--color-line)] py-4 hover:bg-ink-800/40 transition-colors duration-300 -mx-2 px-2">
+            <input
+              type="radio"
+              name="variant"
+              value={v.price}
+              data-label={v.label}
+              checked={i === 0}
+              class="peer sr-only"
+            />
+            <span class="mt-1.5 h-4 w-4 shrink-0 rounded-full border border-bone-400 peer-checked:border-ember-300 peer-checked:bg-ember-300 peer-focus-visible:ring-2 peer-focus-visible:ring-ember-300 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-ink-800 transition-all duration-300"></span>
+            <div class="flex-1 flex items-start justify-between gap-4 min-w-0">
+              <div class="min-w-0">
+                <div class="font-serif text-base text-bone-50 group-hover:text-ember-300 transition-colors duration-300">{v.label}</div>
+                {v.description && <div class="font-serif italic text-xs text-bone-400 mt-1">{v.description}</div>}
+              </div>
+              <div class="font-mono text-sm text-bone-100 shrink-0 tabular">CHF {v.price.toLocaleString('de-CH')}.–</div>
+            </div>
+          </label>
+        ))}
+      </div>
+    </fieldset>
+  )}
+
+  {product.options && product.options.length > 0 && (
+    <fieldset class="mb-8">
+      <legend class="font-mono text-[10px] uppercase tracking-widest3 text-bone-400 mb-4">Optionen & Zubehör</legend>
+      <div class="space-y-0">
+        {product.options.map((o) => (
+          <label class="group flex items-start gap-4 cursor-pointer border-b border-[color:var(--color-line)] py-4 hover:bg-ink-800/40 transition-colors duration-300 -mx-2 px-2">
+            <input
+              type="checkbox"
+              name="option"
+              value={o.priceAdd}
+              data-label={o.label}
+              class="peer sr-only"
+            />
+            <span class="mt-1.5 h-4 w-4 shrink-0 border border-bone-400 peer-checked:border-ember-300 peer-checked:bg-ember-300 peer-focus-visible:ring-2 peer-focus-visible:ring-ember-300 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-ink-800 flex items-center justify-center transition-all duration-300">
+              <svg class="opacity-0 peer-checked:opacity-100 transition-opacity" width="10" height="8" viewBox="0 0 10 8" fill="none" aria-hidden="true">
+                <path d="M1 4L3.5 6.5L9 1" stroke="#0C0A09" stroke-width="1.8"/>
+              </svg>
+            </span>
+            <div class="flex-1 flex items-start justify-between gap-4 min-w-0">
+              <div class="min-w-0">
+                <div class="font-serif text-base text-bone-50 group-hover:text-ember-300 transition-colors duration-300">{o.label}</div>
+                {o.note && <div class="font-serif italic text-xs text-bone-400 mt-1">{o.note}</div>}
+              </div>
+              <div class="font-mono text-sm text-bone-100 shrink-0 tabular">+ CHF {o.priceAdd.toLocaleString('de-CH')}.–</div>
+            </div>
+          </label>
+        ))}
+      </div>
+    </fieldset>
+  )}
+
+  <!-- Total block -->
+  <div class="relative mt-2 p-6 bg-gradient-to-br from-ink-700 via-ink-800 to-ink-800 border border-[color:var(--color-line-strong)]">
+    <div class="absolute -top-px left-0 right-0 h-px bg-gradient-to-r from-transparent via-ember-300/60 to-transparent"></div>
+    <div class="flex items-end justify-between gap-4">
+      <div>
+        <div class="font-mono text-[10px] uppercase tracking-widest3 text-bone-400 mb-2">Total inkl. MwSt.</div>
+        <div
+          class="font-display text-display-sm text-ember-300 leading-none tabular"
+          data-total
+          aria-live="polite"
+          aria-atomic="true"
+        >CHF {product.basePrice.toLocaleString('de-CH')}.–</div>
+      </div>
+      <a
+        href={`/kontakt/?produkt=${encodeURIComponent(product.name)}`}
+        class="btn-primary shrink-0"
+        data-inquiry-btn
+      >
+        Anfragen
+        <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
+          <path d="M1 5H13M13 5L9 1M13 5L9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <p class="mt-4 font-serif italic text-xs text-bone-400">
+    Unverbindliche Kalkulation. Alle Preise inkl. MwSt. Endgültiger Preis nach individueller Absprache.
+  </p>
+</div>
+
+<script>
+  const formatCHF = (n: number) => `CHF ${n.toLocaleString('de-CH')}.–`;
+  const productName = document.querySelector<HTMLElement>('[data-product-name]')?.dataset.productName ?? '';
+
+  document.querySelectorAll<HTMLElement>('[data-configurator]').forEach((root) => {
+    const totalEl = root.querySelector('[data-total]') as HTMLElement | null;
+    const inquiryBtn = root.querySelector<HTMLAnchorElement>('[data-inquiry-btn]');
+    const baseFallback = Number(root.dataset.basePrice ?? 0);
+
+    const recalc = () => {
+      const variant = root.querySelector<HTMLInputElement>('input[name="variant"]:checked');
+      const options = root.querySelectorAll<HTMLInputElement>('input[name="option"]:checked');
+      const base = variant ? Number(variant.value) : baseFallback;
+      const extras = Array.from(options).reduce((sum, o) => sum + Number(o.value), 0);
+      const total = base + extras;
+
+      if (totalEl) totalEl.textContent = formatCHF(total);
+
+      if (inquiryBtn) {
+        const selectedLabel = variant?.dataset.label ?? '';
+        const optLabels = Array.from(options).map((o) => o.dataset.label ?? '').filter(Boolean);
+        const summary = [selectedLabel, ...optLabels].filter(Boolean).join(' + ');
+        const href = `/kontakt/?produkt=${encodeURIComponent(productName)}&konfig=${encodeURIComponent(summary)}&total=${total}`;
+        inquiryBtn.setAttribute('href', href);
+      }
+    };
+
+    root.querySelectorAll<HTMLInputElement>('input').forEach((input) => {
+      input.addEventListener('change', recalc);
+    });
+    recalc();
+  });
+</script>

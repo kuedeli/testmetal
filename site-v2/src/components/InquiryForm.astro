@@ -1,0 +1,96 @@
+---
+import { site } from '../data/site';
+
+interface Props {
+  subjectPrefill?: string;
+  title?: string;
+  compact?: boolean;
+}
+const { subjectPrefill = '', title = 'Anfrage senden', compact = false } = Astro.props;
+---
+<form
+  class:list={['inquiry-form relative', compact ? '' : 'surface-card p-8 md:p-10']}
+  action={`mailto:${site.contact.email}`}
+  method="post"
+  enctype="text/plain"
+>
+  <div class="flex items-end justify-between gap-4 mb-8">
+    <h3 class="font-display text-display-sm tracking-tight">{title}</h3>
+    <span class="font-mono text-[10px] uppercase tracking-widest3 text-bone-400">/ Kontakt</span>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <label class="flex flex-col gap-2">
+      <span class="font-mono text-[10px] uppercase tracking-widest3 text-bone-400">Name</span>
+      <input
+        type="text"
+        name="Name"
+        required
+        autocomplete="name"
+        class="bg-transparent border-b border-[color:var(--color-line-strong)] focus:border-ember-300 py-3 font-serif text-base text-bone-50 focus:outline-none transition-colors duration-300"
+      />
+    </label>
+    <label class="flex flex-col gap-2">
+      <span class="font-mono text-[10px] uppercase tracking-widest3 text-bone-400">E-Mail</span>
+      <input
+        type="email"
+        name="Email"
+        required
+        autocomplete="email"
+        class="bg-transparent border-b border-[color:var(--color-line-strong)] focus:border-ember-300 py-3 font-serif text-base text-bone-50 focus:outline-none transition-colors duration-300"
+      />
+    </label>
+    <label class="flex flex-col gap-2">
+      <span class="font-mono text-[10px] uppercase tracking-widest3 text-bone-400">Telefon <span class="italic text-bone-400/60">· optional</span></span>
+      <input
+        type="tel"
+        name="Telefon"
+        autocomplete="tel"
+        class="bg-transparent border-b border-[color:var(--color-line-strong)] focus:border-ember-300 py-3 font-serif text-base text-bone-50 focus:outline-none transition-colors duration-300 tabular"
+      />
+    </label>
+    <label class="flex flex-col gap-2">
+      <span class="font-mono text-[10px] uppercase tracking-widest3 text-bone-400">Betreff</span>
+      <input
+        type="text"
+        name="Betreff"
+        value={subjectPrefill}
+        class="bg-transparent border-b border-[color:var(--color-line-strong)] focus:border-ember-300 py-3 font-serif text-base text-bone-50 focus:outline-none transition-colors duration-300"
+        data-subject-input
+      />
+    </label>
+  </div>
+
+  <label class="flex flex-col gap-2 mt-8">
+    <span class="font-mono text-[10px] uppercase tracking-widest3 text-bone-400">Nachricht</span>
+    <textarea
+      name="Nachricht"
+      rows="5"
+      required
+      class="bg-transparent border-b border-[color:var(--color-line-strong)] focus:border-ember-300 py-3 font-serif text-base text-bone-50 focus:outline-none transition-colors duration-300 resize-none"
+      placeholder="Gewünschtes Produkt, Konfiguration, Termin, individuelle Wünsche…"
+    ></textarea>
+  </label>
+
+  <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mt-10 pt-6 border-t border-[color:var(--color-line)]">
+    <p class="font-serif italic text-xs text-bone-400 max-w-md">
+      Mit dem Absenden erklären Sie sich einverstanden, dass wir Sie zur Beantwortung Ihrer Anfrage kontaktieren.
+    </p>
+    <button type="submit" class="btn-primary whitespace-nowrap">
+      Anfrage absenden
+      <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
+        <path d="M1 5H13M13 5L9 1M13 5L9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
+      </svg>
+    </button>
+  </div>
+</form>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const prod = params.get('produkt');
+  if (prod) {
+    document.querySelectorAll<HTMLInputElement>('[data-subject-input]').forEach((el) => {
+      el.value = `Anfrage: ${decodeURIComponent(prod)}`;
+    });
+  }
+</script>

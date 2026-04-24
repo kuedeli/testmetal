@@ -1,0 +1,29 @@
+---
+interface Props {
+  eyebrow?: string;
+  number?: string;
+  title: string;
+  titleItalic?: string;
+  lead?: string;
+  align?: 'left' | 'center';
+}
+const { eyebrow, number, title, titleItalic, lead, align = 'left' } = Astro.props;
+---
+<div class:list={['flex flex-col gap-5', align === 'center' ? 'items-center text-center' : 'items-start']}>
+  {(eyebrow || number) && (
+    <div class="flex items-center gap-5">
+      {number && <span class="font-mono text-[11px] text-ember-300 tracking-widest2">{number}</span>}
+      <span class="h-px w-12 bg-ember-300/40"></span>
+      {eyebrow && <span class="eyebrow text-bone-400">{eyebrow}</span>}
+    </div>
+  )}
+  <h2 class="font-display text-display-lg leading-none tracking-tight text-balance">
+    <slot name="title">
+      {title}
+      {titleItalic && <span class="italic text-ember-300"> {titleItalic}</span>}
+    </slot>
+  </h2>
+  {lead && (
+    <p class="text-lg text-bone-200 max-w-copy text-pretty leading-relaxed">{lead}</p>
+  )}
+</div>

@@ -1,0 +1,184 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Gallery from '../../components/Gallery.astro';
+import Configurator from '../../components/Configurator.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import { products } from '../../data/products';
+
+export async function getStaticPaths() {
+  return products.map((p) => ({
+    params: { slug: p.slug },
+    props: { product: p },
+  }));
+}
+
+const { product } = Astro.props;
+const related = products.filter((p) => p.slug !== product.slug);
+const words = product.name.split(' ');
+const head = words.slice(0, -1).join(' ');
+const tail = words.slice(-1)[0];
+---
+<BaseLayout title={product.name} description={product.tagline} ogImage={product.heroImage}>
+  <!-- HERO -->
+  <section class="relative pt-32 md:pt-36 pb-12 md:pb-20">
+    <div class="container-page">
+      <!-- Breadcrumb -->
+      <nav class="flex items-center gap-3 mb-10 reveal" aria-label="Breadcrumb">
+        <a href="/produkte/" class="font-mono text-[10px] uppercase tracking-widest3 text-bone-400 hover:text-ember-300 transition-colors duration-300">
+          ← Alle Produkte
+        </a>
+        <span class="font-mono text-[10px] text-ink-500">/</span>
+        <span class="font-mono text-[10px] uppercase tracking-widest3 text-bone-400">{product.name}</span>
+      </nav>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+        <!-- LEFT — Meta & name (sticky) -->
+        <div class="lg:col-span-4 lg:sticky lg:top-28">
+          <div class="eyebrow mb-5">{product.subtitle}</div>
+          <h1 data-product-name={product.name} class="font-display text-display-xl leading-[0.88] tracking-tight text-balance reveal">
+            {head && <span>{head} </span>}<span class="italic-ember">{tail}</span>
+          </h1>
+          <p class="mt-8 font-serif italic text-lg text-bone-200 text-pretty leading-snug reveal" style="transition-delay: 120ms;">
+            {product.tagline}
+          </p>
+
+          <div class="mt-10 pt-8 border-t border-[color:var(--color-line-strong)]">
+            <div class="flex items-end gap-4 mb-8">
+              <div>
+                <div class="font-mono text-[10px] uppercase tracking-widest3 text-bone-400 mb-2">Preis ab · inkl. MwSt.</div>
+                <div class="font-display text-display-md text-ember-300 leading-none tabular whitespace-nowrap">
+                  CHF {product.basePrice.toLocaleString('de-CH')}.–
+                </div>
+              </div>
+            </div>
+            <a href={`/kontakt/?produkt=${encodeURIComponent(product.name)}`} class="btn-primary w-full justify-center">
+              Konfiguration anfragen
+              <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
+                <path d="M1 5H13M13 5L9 1M13 5L9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- RIGHT — Gallery -->
+        <div class="lg:col-span-8">
+          <Gallery images={product.gallery} alt={product.name} />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEAD / STORY -->
+  <section class="py-24 md:py-32 bg-ink-800/40 border-y border-[color:var(--color-line)]">
+    <div class="container-page">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
+        <div class="lg:col-span-5">
+          <SectionHeading
+            number="01"
+            eyebrow="Prinzip"
+            title="Mehr als"
+            titleItalic="nur Metall."
+          />
+        </div>
+        <div class="lg:col-span-7 space-y-6 text-lg md:text-xl text-bone-100 leading-relaxed text-pretty reveal font-serif">
+          <p>{product.lead}</p>
+          {product.story && <p class="font-serif">{product.story}</p>}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPECS + HIGHLIGHTS -->
+  <section class="py-24 md:py-32 bg-ink-900">
+    <div class="container-page">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14">
+        <!-- Highlights -->
+        <div class="lg:col-span-5">
+          <div class="eyebrow mb-8">Highlights</div>
+          <ul class="space-y-0" data-stagger="80">
+            {product.highlights.map((h, i) => (
+              <li class="flex items-start gap-6 border-t border-[color:var(--color-line)] py-5 first:border-t-0 reveal">
+                <span class="font-mono text-[11px] text-ember-300 tracking-widest3 w-8 pt-1.5 shrink-0 tabular">0{i + 1}</span>
+                <span class="font-serif text-lg text-bone-50 text-pretty leading-snug">{h}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <!-- Specs + Comparison -->
+        <div class="lg:col-span-7 lg:col-start-7">
+          <div class="eyebrow mb-8">Technische Daten</div>
+          <dl class="surface-card p-6 md:p-8">
+            {product.specs.map((s, i) => (
+              <div class={i !== 0 ? 'data-row' : 'data-row'}>
+                <dt>{s.label}</dt>
+                <dd>{s.value}</dd>
+              </div>
+            ))}
+          </dl>
+
+          {product.comparison && (
+            <div class="relative mt-6 surface-card p-6 md:p-8 glow-ember" style="background: linear-gradient(135deg, rgba(234,88,12,0.08) 0%, #1C1917 60%);">
+              <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-ember-300 to-transparent"></div>
+              <div class="eyebrow mb-4">Vergleich · {product.comparison.label}</div>
+              <div class="flex items-baseline gap-5 flex-wrap">
+                <span class="font-display text-display-md text-ember-300 leading-none tabular">{product.comparison.ours}</span>
+                <span class="font-mono text-[10px] uppercase text-bone-400 tracking-widest3">vs.</span>
+                <span class="font-display text-3xl text-bone-400 line-through leading-none tabular">{product.comparison.theirs}</span>
+                <span class="font-mono text-[10px] uppercase tracking-widest3 text-bone-400 ml-auto">Mitbewerber</span>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONFIGURATOR -->
+  {(product.variants || product.options) && (
+    <section class="py-24 md:py-32 bg-ink-800/40 border-y border-[color:var(--color-line)]">
+      <div class="container-page">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+          <div class="lg:col-span-5 lg:sticky lg:top-28 lg:self-start">
+            <SectionHeading
+              number="02"
+              eyebrow="Konfigurieren"
+              title="Ihre"
+              titleItalic="Zusammenstellung."
+              lead="Wählen Sie Grundausführung und Zubehör. Der Preis berechnet sich live. Senden Sie die Konfiguration direkt als Anfrage — wir melden uns mit der finalen Offerte."
+            />
+            <ul class="mt-10 space-y-4 font-serif text-sm text-bone-200 italic">
+              <li class="flex gap-4"><span class="text-ember-300 not-italic">─</span><span>Unverbindlich — keine Bestellung</span></li>
+              <li class="flex gap-4"><span class="text-ember-300 not-italic">─</span><span>Preise sind Richtwerte inkl. MwSt.</span></li>
+              <li class="flex gap-4"><span class="text-ember-300 not-italic">─</span><span>Sonderwünsche willkommen</span></li>
+            </ul>
+          </div>
+          <div class="lg:col-span-7">
+            <Configurator product={product} />
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- RELATED -->
+  <section class="py-24 md:py-32 bg-ink-900">
+    <div class="container-page">
+      <div class="flex items-end justify-between gap-8 mb-12 flex-wrap">
+        <SectionHeading
+          number="03"
+          eyebrow="Weiter"
+          title="Andere"
+          titleItalic="Produktlinien."
+        />
+        <a href="/produkte/" class="btn-ghost">Alle Produkte</a>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5" data-stagger="80">
+        {related.slice(0, 3).map((p, i) => (
+          <ProductCard product={p} index={i} size="md" />
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

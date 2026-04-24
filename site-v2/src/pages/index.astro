@@ -1,0 +1,391 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProductCard from '../components/ProductCard.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import Marquee from '../components/Marquee.astro';
+import { pillars, site } from '../data/site';
+import { products } from '../data/products';
+
+const heroImage = '/images/homepage_368edd_7d7579fc40964818ab033182037607d9_7Emv2_jpg.jpg';
+const workshopImage = '/images/homepage_368edd_1a9cd367397f48378c324d18505d7916_mv2_d_5152_3864_s_4_.jpg';
+const fiveImage = '/images/homepage_368edd_c5ff0877d01c4983a24665771a02db63_mv2_d_5152_3864_s_4_.jpg';
+const warpingImage = '/images/homepage_368edd_d9851b0f3e544d8ab50760870914f9a2_mv2_d_2560_1920_s_2_.jpg';
+const femImage = '/images/homepage_368edd_32b0294a338746cab7192205fe2d5517_mv2_png.png';
+---
+<BaseLayout>
+  <!-- ━━━━━ HERO ━━━━━ -->
+  <section class="relative min-h-[100svh] flex items-end overflow-hidden">
+    <div class="absolute inset-0 z-0">
+      <img
+        src={heroImage}
+        alt="Feuerkugel am Abend"
+        class="w-full h-full object-cover"
+        style="animation: heroZoom 30s ease-out infinite alternate;"
+        fetchpriority="high"
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-ink-900 via-ink-900/80 to-ink-900/30"></div>
+      <div class="absolute inset-0 bg-gradient-to-r from-ink-900/70 via-transparent to-transparent"></div>
+      <!-- Ambient ember blob -->
+      <div class="ambient-blob bg-ember-300" style="width: 46vw; height: 46vw; left: -10%; bottom: -20%;"></div>
+    </div>
+
+    <!-- Top meta -->
+    <div class="absolute top-24 md:top-28 left-0 right-0 z-10" style="text-shadow: 0 1px 12px rgba(12,10,9,0.85);">
+      <div class="container-page flex items-center justify-between gap-6">
+        <div class="flex items-center gap-4">
+          <span class="font-mono text-[11px] uppercase tracking-widest3 text-ember-300 flex items-center gap-2">
+            <span class="inline-block w-1.5 h-1.5 rounded-full bg-ember-300 animate-pulse"></span>
+            Werkstatt aktiv
+          </span>
+          <span class="hidden md:inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-widest3 text-bone-100">
+            <span class="inline-block w-6 h-px bg-bone-300/50"></span>
+            8918 Unterlunkhofen · CH
+          </span>
+        </div>
+        <span class="hidden md:inline font-mono text-[11px] uppercase tracking-widest3 text-bone-100 tabular">Est. 2018</span>
+      </div>
+    </div>
+
+    <!-- Hero content -->
+    <div class="container-page relative z-10 pb-24 md:pb-32">
+      <div class="max-w-5xl">
+        <div class="eyebrow mb-8 reveal flex items-center gap-3">
+          <span class="inline-block w-12 h-px bg-ember-300"></span>
+          <span>Design · Engineering · Handwerk</span>
+        </div>
+
+        <h1 class="font-display text-display-xl text-bone-50 leading-[0.88] tracking-tight text-balance">
+          <span class="block reveal">Feuer.</span>
+          <span class="block reveal" style="transition-delay: 120ms;">Stahl.</span>
+          <span class="block reveal italic-ember" style="transition-delay: 240ms;">Ingenieurskunst.</span>
+        </h1>
+
+        <p class="mt-10 font-serif italic text-xl md:text-2xl text-bone-100 max-w-2xl text-pretty leading-snug reveal" style="transition-delay: 360ms;">
+          Individuelle Grills, Feuerkugeln und Gartenausstattung aus massivem Stahl —
+          vom Polymechaniker und Ingenieur. Alles aus einer Werkstatt.
+        </p>
+
+        <div class="mt-12 flex flex-wrap items-center gap-5 reveal" style="transition-delay: 480ms;">
+          <a href="/produkte/" class="btn-primary">
+            Produkte entdecken
+            <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
+              <path d="M1 5H13M13 5L9 1M13 5L9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
+            </svg>
+          </a>
+          <a href="/kontakt/" class="btn-ghost">Jetzt anfragen</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom meta -->
+    <div class="absolute bottom-6 left-0 right-0 z-10" style="text-shadow: 0 1px 12px rgba(12,10,9,0.85);">
+      <div class="container-page flex items-center justify-between gap-6 font-mono text-[10px] uppercase tracking-widest3 text-bone-100">
+        <span class="flex items-center gap-2"><span class="text-ember-300">↓</span> Die Geschichte</span>
+        <span class="tabular">Patent EP 3 795 857 A1</span>
+      </div>
+    </div>
+
+    <style>
+      @keyframes heroZoom {
+        from { transform: scale(1.0); }
+        to   { transform: scale(1.1); }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        [style*="heroZoom"] { animation: none !important; transform: none !important; }
+      }
+    </style>
+  </section>
+
+  <!-- ━━━━━ MARQUEE ━━━━━ -->
+  <Marquee items={['Feuerkugel Klassik', 'Feuerkugel Asymmetrisch', 'Feuerkubus', 'Feuerschale', 'Rundbank', 'Möbel', 'Springbrunnen', 'Swiss Made']} />
+
+  <!-- ━━━━━ CHAPTER 01 — DAS PROBLEM ━━━━━ -->
+  <section class="relative py-24 md:py-32 overflow-hidden">
+    <div class="absolute inset-0 z-0">
+      <img src={warpingImage} alt="" class="w-full h-full object-cover opacity-20" loading="lazy" />
+      <div class="absolute inset-0 bg-gradient-to-b from-ink-900 via-ink-900/95 to-ink-900"></div>
+    </div>
+
+    <div class="container-page relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14">
+        <div class="lg:col-span-4 lg:sticky lg:top-32 lg:self-start">
+          <div class="chapter-label mb-4">Kapitel 01</div>
+          <div class="font-mono text-[40px] text-brass-300 tracking-tighter leading-none tabular mb-8">01</div>
+          <div class="eyebrow-muted">Das Problem</div>
+        </div>
+
+        <div class="lg:col-span-8">
+          <h2 class="font-display text-display-lg leading-[0.92] tracking-tight text-balance mb-12 reveal">
+            Neun von zehn Feuerkugeln <br/><span class="italic-brass">verziehen sich.</span>
+          </h2>
+
+          <div class="space-y-8 font-serif text-lg md:text-xl text-bone-100 leading-relaxed text-pretty max-w-[56ch] reveal" style="transition-delay: 120ms;">
+            <p>
+              Der häufigste Fehler bei Feuerkugel-Grills hat nichts mit dem Feuer zu tun —
+              sondern mit dem Stahl davor. Wanddicken zwischen <span class="tabular text-bone-50">2&nbsp;und&nbsp;5&nbsp;mm</span> sind Industrie-Standard.
+              Günstig in der Herstellung. Katastrophal im Betrieb.
+            </p>
+            <p>
+              Nach der dritten, vierten Hitzeperiode beginnt der Ring zu wandern.
+              Die Kugel wird oval. Der Grillring klemmt. Die Fuge, die Öl ableiten sollte, schliesst
+              sich oder klafft. Das Produkt sieht im Laden noch gut aus — auf der Terrasse nicht mehr.
+            </p>
+            <blockquote class="relative border-l-2 border-ember-300 pl-8 py-4 font-display italic text-2xl md:text-3xl text-bone-50 tracking-tight">
+              „Feuer ist ehrlich. Wenn Stahl nachgibt, sieht man es."
+              <span class="block not-italic font-mono text-[10px] uppercase tracking-widest3 text-bone-400 mt-4 tabular">— Fabian Schmitter</span>
+            </blockquote>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ━━━━━ CHAPTER 02 — DIE LÖSUNG IST EIN INGENIEUR ━━━━━ -->
+  <section class="relative py-24 md:py-32 bg-ink-800/40 border-y border-[color:var(--color-line)]">
+    <div class="container-page">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+        <div class="lg:col-span-5 lg:sticky lg:top-32 lg:self-start">
+          <div class="chapter-label mb-4">Kapitel 02</div>
+          <div class="font-mono text-[40px] text-brass-300 tracking-tighter leading-none tabular mb-8">02</div>
+          <h2 class="font-display text-display-lg leading-[0.92] tracking-tight reveal">
+            Die Lösung ist <br/><span class="italic-ember">kein Produkt.</span>
+          </h2>
+          <p class="mt-8 font-serif text-lg text-bone-200 max-w-copy text-pretty reveal" style="transition-delay: 120ms;">
+            Sie ist ein Ingenieur, der weiss, wann Stahl nachgibt — und vorher rechnet.
+          </p>
+        </div>
+
+        <div class="lg:col-span-7 space-y-12">
+          <div class="relative aspect-[4/3] overflow-hidden surface-card reveal">
+            <img src={femImage} alt="FEM-Simulation" class="w-full h-full object-contain p-8" loading="lazy" />
+            <div class="absolute top-5 left-5 font-mono text-[10px] uppercase tracking-widest3 text-ember-300 tabular">/ FEM · Thermische Simulation</div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-[color:var(--color-line)]" data-stagger="100">
+            {pillars.map((p) => (
+              <article class="group relative bg-ink-800/60 p-8 transition-colors duration-500 hover:bg-ink-700 reveal">
+                <div class="flex items-start justify-between mb-6">
+                  <span class="font-mono text-[11px] tracking-widest3 text-ember-300 tabular">{p.kicker}</span>
+                </div>
+                <h3 class="font-display text-2xl md:text-3xl leading-none tracking-tight mb-4 group-hover:text-ember-300 transition-colors duration-500">
+                  {p.title}
+                </h3>
+                <p class="font-serif text-sm text-bone-200 text-pretty leading-relaxed mb-5">{p.lead}</p>
+                <ul class="space-y-1.5 text-xs text-bone-400">
+                  {p.points.map((pt) => (
+                    <li class="flex gap-2.5 font-serif italic">
+                      <span class="text-ember-300 shrink-0 not-italic">·</span>
+                      <span>{pt}</span>
+                    </li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ━━━━━ CHAPTER 03 — 6MM (climax) ━━━━━ -->
+  <section class="relative py-24 md:py-32 overflow-hidden">
+    <div class="absolute inset-0 z-0">
+      <img src={fiveImage} alt="" class="w-full h-full object-cover opacity-15" loading="lazy" />
+      <div class="absolute inset-0 bg-gradient-to-br from-ink-900 via-ink-900/95 to-ink-900"></div>
+      <div class="ambient-blob bg-ember-300" style="width: 40vw; height: 40vw; right: -8%; top: 20%;"></div>
+    </div>
+
+    <div class="container-page relative z-10">
+      <div class="chapter-label mb-4 reveal">Kapitel 03</div>
+      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-16">
+        <h2 class="font-display text-display-xl leading-[0.88] tracking-tight text-balance max-w-4xl reveal" style="transition-delay: 80ms;">
+          Sechs
+          <span class="italic-ember">Millimeter.</span>
+        </h2>
+        <p class="font-mono text-[10px] uppercase tracking-widest3 text-bone-400 tabular">/ Wandstärke — Konstruktionsentscheid</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+        <div class="lg:col-span-6">
+          <p class="font-serif text-lg md:text-xl text-bone-100 leading-relaxed text-pretty max-w-copy mb-8 reveal">
+            Wir fertigen konsequent mit <span class="text-ember-300 font-semibold tabular">6&nbsp;mm</span>. Nicht, weil es teurer ist —
+            sondern weil dünner nicht hält. Sechs Millimeter verziehen sich nicht.
+            Sechs Millimeter sind planbar. Sechs Millimeter überleben den zehnten Sommer.
+          </p>
+
+          <div class="space-y-5 reveal" style="transition-delay: 140ms;">
+            <div class="flex items-start gap-5">
+              <div class="font-mono text-[11px] text-ember-300 tracking-widest3 w-8 pt-1 shrink-0 tabular">A1</div>
+              <div>
+                <div class="font-display text-xl text-bone-50 mb-1">Formstabilität</div>
+                <div class="font-serif text-sm text-bone-300 text-pretty">Auch nach Jahren Dauerbetrieb keine Verformung.</div>
+              </div>
+            </div>
+            <div class="hairline"></div>
+            <div class="flex items-start gap-5">
+              <div class="font-mono text-[11px] text-ember-300 tracking-widest3 w-8 pt-1 shrink-0 tabular">A2</div>
+              <div>
+                <div class="font-display text-xl text-bone-50 mb-1">Patina-Charakter</div>
+                <div class="font-serif text-sm text-bone-300 text-pretty">Sandgestrahlte Oberfläche für edle Rostoptik.</div>
+              </div>
+            </div>
+            <div class="hairline"></div>
+            <div class="flex items-start gap-5">
+              <div class="font-mono text-[11px] text-ember-300 tracking-widest3 w-8 pt-1 shrink-0 tabular">A3</div>
+              <div>
+                <div class="font-display text-xl text-bone-50 mb-1">Präzise Fuge</div>
+                <div class="font-serif text-sm text-bone-300 text-pretty">Öl läuft innen ab — die Aussenhaut bleibt sauber.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-6 lg:col-start-7">
+          <div class="grid grid-cols-2 gap-5">
+            <!-- Competitor -->
+            <div class="surface-card p-8 reveal">
+              <div class="font-mono text-[10px] uppercase tracking-widest3 text-bone-400 mb-8">Mitbewerber</div>
+              <div class="font-display text-display-md text-bone-300 mb-4 leading-none tabular">
+                2 <span class="text-bone-400">–</span> 5
+              </div>
+              <div class="font-mono text-xs text-bone-400 mb-6 tracking-widest2">Millimeter</div>
+              <div class="h-[3px] w-full bg-bone-300/30 mb-6"></div>
+              <ul class="text-sm text-bone-400 space-y-2 font-serif italic">
+                <li>Verziehen im Betrieb</li>
+                <li>Kürzere Lebensdauer</li>
+                <li>Meist ohne Oberfläche</li>
+              </ul>
+            </div>
+
+            <!-- Us -->
+            <div class="relative surface-card p-8 glow-ember reveal" style="transition-delay: 120ms; background: linear-gradient(135deg, rgba(234,88,12,0.08) 0%, #1C1917 60%);">
+              <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-ember-300 to-transparent"></div>
+              <div class="font-mono text-[10px] uppercase tracking-widest3 text-ember-300 mb-8">metal-works</div>
+              <div class="font-display text-display-md text-ember-300 mb-4 leading-none tabular">6</div>
+              <div class="font-mono text-xs text-ember-300 mb-6 tracking-widest2">Millimeter</div>
+              <div class="h-[3px] w-full bg-ember-300 mb-6"></div>
+              <ul class="text-sm text-bone-100 space-y-2 font-serif">
+                <li class="flex gap-2"><span class="text-ember-300">+</span>Formstabil auf Jahre</li>
+                <li class="flex gap-2"><span class="text-ember-300">+</span>Sandgestrahlte Patina</li>
+                <li class="flex gap-2"><span class="text-ember-300">+</span>Modularer Aufbau</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="mt-8 font-mono text-[10px] uppercase tracking-widest3 text-bone-400">
+            / Quelle — Mitbewerber-Analyse, Hochpreissegment CH
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ━━━━━ CHAPTER 04 — DAS ERGEBNIS (Products) ━━━━━ -->
+  <section class="relative py-24 md:py-32 bg-ink-800/40 border-y border-[color:var(--color-line)]">
+    <div class="container-page">
+      <div class="chapter-label mb-4">Kapitel 04</div>
+      <div class="flex flex-col md:flex-row items-start md:items-end justify-between gap-8 mb-16">
+        <h2 class="font-display text-display-lg leading-[0.9] tracking-tight text-balance max-w-3xl reveal">
+          Vier Wege, ein
+          <span class="italic-ember">Feuer zu bändigen.</span>
+        </h2>
+        <a href="/produkte/" class="btn-ghost">
+          Alle Produkte
+          <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
+            <path d="M1 5H13M13 5L9 1M13 5L9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
+          </svg>
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6" data-stagger="80">
+        {products.map((p, i) => (
+          <ProductCard product={p} index={i} size="lg" />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ━━━━━ CHAPTER 05 — DER ORT ━━━━━ -->
+  <section class="relative py-24 md:py-32 bg-ink-900">
+    <div class="container-page">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+        <div class="lg:col-span-6 order-2 lg:order-1">
+          <div class="relative aspect-[4/5] overflow-hidden surface-card reveal">
+            <img src={workshopImage} alt="Werkstatt metal-works" class="w-full h-full object-cover" loading="lazy" />
+            <div class="absolute inset-0 bg-gradient-to-t from-ink-900/40 to-transparent"></div>
+            <div class="absolute bottom-6 left-6 right-6 flex items-end justify-between">
+              <div class="bg-ink-900/85 backdrop-blur-sm px-5 py-4 border border-[color:var(--color-line-strong)]">
+                <div class="font-mono text-[10px] uppercase tracking-widest3 text-bone-400">Werkstatt</div>
+                <div class="font-display text-xl italic-ember">Oberwilerstrasse 13</div>
+              </div>
+              <span class="font-mono text-[10px] text-bone-50 tracking-widest3 bg-ink-900/85 backdrop-blur-sm px-3 py-1.5 border border-[color:var(--color-line)] tabular">47.31° N · 8.40° E</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-6 lg:col-start-7 order-1 lg:order-2">
+          <div class="chapter-label mb-4">Kapitel 05</div>
+          <SectionHeading
+            number="05"
+            eyebrow="Der Ort"
+            title="Ein Mann."
+            titleItalic="Eine Werkstatt."
+            lead="Fabian Schmitter — Polymechaniker EFZ, diplomierter Maschineningenieur FH, MBA Luzern. Patentbeteiligung EP 3 795 857 A1 in der Maschinenindustrie."
+          />
+          <dl class="mt-12" data-stagger="60">
+            <div class="data-row reveal">
+              <dt>01 · Konstruktion</dt>
+              <dd>CAD, FEM, Festigkeits- und Wärmeberechnung vor der ersten Funke.</dd>
+            </div>
+            <div class="data-row reveal">
+              <dt>02 · Fertigung</dt>
+              <dd>Zuschnitt, Schweissen, Schleifen, Strahlen — alles vor Ort.</dd>
+            </div>
+            <div class="data-row reveal">
+              <dt>03 · Finish</dt>
+              <dd>Sandgestrahlt, lackiert, gewachst oder roh — je nach Wunsch.</dd>
+            </div>
+          </dl>
+          <div class="mt-10">
+            <a href="/ueber-uns/" class="btn-ghost">
+              Mehr über Fabian
+              <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
+                <path d="M1 5H13M13 5L9 1M13 5L9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ━━━━━ FINAL CTA ━━━━━ -->
+  <section class="relative py-24 md:py-32 bg-ink-900 overflow-hidden border-t border-[color:var(--color-line)]">
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="ambient-blob bg-ember-300 animate-flicker" style="width: 60vw; height: 60vw; left: 50%; top: 50%; transform: translate(-50%, -50%);"></div>
+    </div>
+
+    <div class="container-page relative z-10">
+      <div class="max-w-4xl mx-auto text-center">
+        <div class="chapter-label mb-6 reveal">Kapitel 06 · Das Gespräch</div>
+        <h2 class="font-display text-display-xl leading-[0.88] tracking-tight text-balance reveal" style="transition-delay: 80ms;">
+          Lassen Sie uns <br/><span class="italic-ember">Feuer machen.</span>
+        </h2>
+        <p class="mt-10 font-serif italic text-xl md:text-2xl text-bone-200 max-w-2xl mx-auto text-pretty reveal" style="transition-delay: 200ms;">
+          Schreiben Sie. Rufen Sie an. Sie sprechen immer direkt mit Fabian.
+        </p>
+        <div class="mt-12 flex flex-wrap items-center justify-center gap-5 reveal" style="transition-delay: 340ms;">
+          <a href="/kontakt/" class="btn-primary">
+            Anfrage senden
+            <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
+              <path d="M1 5H13M13 5L9 1M13 5L9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
+            </svg>
+          </a>
+          <a href={`tel:${site.contact.phone}`} class="btn-ghost tabular">
+            {site.contact.phoneDisplay}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
